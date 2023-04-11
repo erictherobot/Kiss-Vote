@@ -2,8 +2,14 @@ import { GetServerSideProps } from "next";
 import { useState, useEffect, SetStateAction } from "react";
 import axios from "axios";
 import Leaderboard from "../components/Leaderboard";
+import { UserType, VotesType } from "../types";
 import Image from "next/image";
 import KissAnimation from "@/components/KissAnimation";
+
+type VotingProps = {
+  user1: UserType;
+  user2: UserType;
+};
 
 // Fetch two random users
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -21,9 +27,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 // Main voting component
-const Voting = ({ user1, user2 }) => {
+const Voting: React.FC<VotingProps> = ({ user1, user2 }) => {
+  const [votes, setVotes] = useState<VotesType>({});
   const [users, setUsers] = useState([user1, user2]);
-  const [votes, setVotes] = useState({});
   const [genderFilter, setGenderFilter] = useState("all");
   const [showKiss, setShowKiss] = useState(false);
 
